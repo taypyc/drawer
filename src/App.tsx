@@ -1,4 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+
+import './App.css';
 
 interface Line {
   points: number[]; // array of x, y coordinates [x1, y1, x2, y2]
@@ -54,21 +59,20 @@ const CanvasComponent: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="draw-area">
       <canvas
         ref={canvasRef}
         width={canvasSize.width}
         height={canvasSize.height}
-        onClick={handleCanvasClick}
-        style={{ border: "1px solid black" }}
+        onClick={handleCanvasClick}        
       />
+      <Stack spacing={1} direction="row" divider={<Divider orientation="vertical" flexItem />}>
+        <Button onClick={() => handleCanvasSizeChange(300, 200)} variant="contained">Small</Button>
+        <Button onClick={() => handleCanvasSizeChange(600, 400)} variant="contained">Middle</Button>
+        <Button onClick={() => handleCanvasSizeChange(900, 600)} variant="contained">Large</Button>
+        </Stack>
       <div>
-        <button onClick={() => handleCanvasSizeChange(300, 200)}>Маленький</button>
-        <button onClick={() => handleCanvasSizeChange(600, 400)}>Середній</button>
-        <button onClick={() => handleCanvasSizeChange(900, 600)}>Великий</button>
-      </div>
-      <div>
-        <h3>Список ліній:</h3>
+        <h3>Lines List:</h3>
         <ul>
           {lines.map((line, index) => (
             <li key={index}>points: {line.points.join(", ")}</li>
