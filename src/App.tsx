@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 
 import './App.css';
 
@@ -17,6 +16,8 @@ const CanvasComponent: React.FC = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
+
+    console.log(ctx);
 
     if (ctx) {
       ctx.clearRect(0, 0, canvasSize.width, canvasSize.height);
@@ -35,12 +36,14 @@ const CanvasComponent: React.FC = () => {
   };
 
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    console.log(e);
     if (!canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
+    console.log(rect);
     const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const y = e.clientY - rect.top;    
 
     const points = [x, y, x + 100, y]; // example points, adjust as needed
     setLines([...lines, { points }]);
@@ -59,26 +62,25 @@ const CanvasComponent: React.FC = () => {
   };
 
   return (
-    <div className="draw-area">
-      <canvas
-        ref={canvasRef}
-        width={canvasSize.width}
-        height={canvasSize.height}
-        onClick={handleCanvasClick}        
-      />
-      <Stack spacing={1} direction="row" divider={<Divider orientation="vertical" flexItem />}>
-        <Button onClick={() => handleCanvasSizeChange(300, 200)} variant="contained">Small</Button>
-        <Button onClick={() => handleCanvasSizeChange(600, 400)} variant="contained">Middle</Button>
-        <Button onClick={() => handleCanvasSizeChange(900, 600)} variant="contained">Large</Button>
-        </Stack>
-      <div>
-        <h3>Lines List:</h3>
-        <ul>
-          {lines.map((line, index) => (
-            <li key={index}>points: {line.points.join(", ")}</li>
-          ))}
-        </ul>
-      </div>
+    <div className="container">
+      <Stack className="control-buttons" spacing={20} direction="row">
+        <Button onClick={() => handleCanvasSizeChange(300, 200)} variant="outlined">Small</Button>
+        <Button onClick={() => handleCanvasSizeChange(600, 400)} variant="outlined">Medium</Button>
+        <Button onClick={() => handleCanvasSizeChange(900, 600)} variant="outlined">Large</Button>
+      </Stack>
+      <div className="draw-area">
+        <canvas
+          ref={canvasRef}
+          width={canvasSize.width}
+          height={canvasSize.height}
+          onClick={handleCanvasClick}
+        />
+      </div>      
+      <ul className="lines-list">
+        {lines.map((line, index) => (
+          <li key={index}><strong>Line {index + 1}</strong> - points [{line.points.join(", ")}]</li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -1,38 +1,38 @@
-.draw-area {
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #1976d2;
+  color: #fff;
+}
+
+.container {
   display: table;
   margin: 0 auto;
 }
 
-canvas {
-  border: 3px solid black
+.draw-area {
+  overflow: auto;
+  display: table;
+  margin: 0 auto 1rem;
+  border: 3px solid #1976d2;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.control-buttons {
+  height: 80px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-around;
 }
 
-.App-link {
-  color: #61dafb;
+canvas {
+  display: block;  
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.lines-list {
+  margin: 0; 
+  padding: 2rem;
+  list-style: none;
+  background: #ccc;
 }
